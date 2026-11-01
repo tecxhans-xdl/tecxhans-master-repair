@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-label="Arte futurista para iCloud / Apple">
+ <defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0d102c"/><stop offset=".6" stop-color="#11183c"/><stop offset="1" stop-color="#081124"/></linearGradient>
+  <linearGradient id="device" x2="1" y2="1"><stop stop-color="#758cbb"/><stop offset=".22" stop-color="#10254f"/><stop offset=".67" stop-color="#0a1130"/><stop offset="1" stop-color="#6172ae"/></linearGradient>
+  <linearGradient id="screen" x2=".1" y2="0" x1=".8" y1="1"><stop stop-color="#0d2546"/><stop offset="1" stop-color="#070c2c"/></linearGradient>
+  <linearGradient id="cloud" x2="0" y2="0" x1=".8" y1="1"><stop stop-color="#65aefa"/><stop offset="1" stop-color="#272867"/></linearGradient>
+  <linearGradient id="miGrad" x2="0" y2="0" x1="1" y1="1"><stop stop-color="#ffb452"/><stop offset=".55" stop-color="#f85e13"/><stop offset="1" stop-color="#b93613"/></linearGradient>
+  <linearGradient id="payGrad" x2="0" y2="0" x1="1" y1="1"><stop stop-color="#30d9c0"/><stop offset="1" stop-color="#1389a1"/></linearGradient>
+  <radialGradient id="halo"><stop stop-color="#b38cff" stop-opacity=".55"/><stop offset=".55" stop-color="#4ce3ff" stop-opacity=".15"/><stop offset="1" stop-color="#b38cff" stop-opacity="0"/></radialGradient>
+  <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="13"/></filter>
+  <filter id="glow" x="-35%" y="-35%" width="170%" height="170%"><feGaussianBlur in="SourceGraphic" stdDeviation="2.3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M36 0 H0 V36" fill="none" stroke="#b38cff" stroke-opacity=".085" stroke-width="1"/></pattern>
+  <clipPath id="clip"><rect x="0" y="0" width="960" height="540" rx="24"/></clipPath>
+ </defs>
+ <g clip-path="url(#clip)"><rect width="960" height="540" fill="url(#bg)"/><rect width="960" height="540" fill="url(#grid)"/>
+ <ellipse cx="270" cy="245" rx="290" ry="260" fill="url(#halo)"/><ellipse cx="737" cy="270" rx="250" ry="250" fill="url(#halo)" opacity=".58"/>
+ <path d="M0 106 H165 L198 75 H370 M960 410 H794 L756 444 H654" fill="none" stroke="#b38cff" stroke-opacity=".42" stroke-width="2"/>
+ <path d="M0 480 H315 M665 61 H960" stroke="#4ce3ff" stroke-width="3" stroke-opacity=".45"/>
+ <rect x="17" y="17" width="926" height="506" rx="29" fill="none" stroke="#b38cff" stroke-opacity=".38" stroke-width="2"/>
+ <rect x="32" y="31" width="896" height="478" rx="23" fill="none" stroke="#4ce3ff" stroke-opacity=".16" stroke-width="1"/>
+ <g fill="#b38cff" opacity=".7"><circle cx="97" cy="104" r="3"/><circle cx="383" cy="420" r="2"/><circle cx="879" cy="170" r="3"/><circle cx="639" cy="110" r="2"/><circle cx="763" cy="464" r="2"/></g>
+ <ellipse cx="274" cy="375" rx="195" ry="22" fill="#b38cff" opacity=".2" filter="url(#shadow)"/>
+ <circle cx="255" cy="253" r="146" fill="none" stroke="#b38cff" stroke-width="2" stroke-opacity=".18" stroke-dasharray="15 16"/>
+ <circle cx="255" cy="253" r="122" fill="none" stroke="#4ce3ff" stroke-width="2" stroke-opacity=".4" stroke-dasharray="5 13"/>
+ <g filter="url(#glow)" fill="url(#cloud)" stroke="#acfcff" stroke-width="5"><path d="M185 301 h141 c38 0 61-27 59-59 -2-32-27-54-57-55 -10-43-43-68-82-66 -39 1-68 28-75 63 -33-1-59 24-61 56 -3 34 24 61 75 61Z"/></g><rect x="218" y="222" width="61" height="67" rx="12" fill="#0c2854" stroke="#a0f7ff" stroke-width="5"/><path d="M231 222 v-21 a18 18 0 0 1 36 0 v21" fill="none" stroke="#e6fbff" stroke-width="5"/><circle cx="249" cy="252" r="7" fill="#56e5ff"/><path d="M249 260 v12" stroke="#56e5ff" stroke-width="4" stroke-linecap="round"/>
+ <g transform="translate(530 99) rotate(10 150 165)">
+ <rect x="8" y="12" width="282" height="348" rx="41" fill="#010716" opacity=".6" filter="url(#shadow)"/>
+ <rect x="0" y="0" width="278" height="353" rx="40" fill="url(#device)" stroke="#b38cff" stroke-width="4"/>
+ <rect x="13" y="13" width="252" height="325" rx="28" fill="url(#screen)" stroke="#4ce3ff" stroke-width="1.8"/>
+ <path d="M104 20 H175" stroke="#8194ac" stroke-width="6" stroke-linecap="round"/>
+ <circle cx="146" cy="170" r="69" fill="#b38cff" fill-opacity=".075" stroke="#b38cff" stroke-opacity=".6" stroke-width="1.5"/>
+ <path d="M141 112 v13 M134 187 v13" stroke="#4ce3ff" stroke-width="3" stroke-linecap="round"/>
+ <rect x="114" y="140" width="68" height="77" rx="14" fill="#102348" stroke="#b38cff" stroke-width="4"/>
+ <path d="M127 140 v-24 a21 21 0 0 1 42 0 v24" fill="none" stroke="#d9f4ff" stroke-width="5"/>
+ <circle cx="148" cy="174" r="6" fill="#b38cff"/><path d="M148 180 v12" stroke="#b38cff" stroke-width="4" stroke-linecap="round"/>
+ <path d="M49 261 H235 M49 279 H209 M49 297 H170" stroke="#b38cff" stroke-opacity=".38" stroke-width="3" stroke-linecap="round"/>
+ <circle cx="136" cy="342" r="5" fill="#a2caf1"/>
+ </g>
+ <g font-family="Segoe UI,Arial,sans-serif" fill="#edf8ff"><text x="86" y="458" font-size="31" font-weight="900" letter-spacing="1.4">ICLOUD</text><text x="87" y="481" font-size="15" font-weight="700" fill="#b38cff" letter-spacing="1.8">APPLE · ICLOUD</text></g>
+ <g transform="translate(691 460)"><rect x="0" y="0" rx="12" width="214" height="32" fill="#0c1230" stroke="#b38cff" stroke-opacity=".6"/><circle cx="18" cy="16" r="5" fill="#b38cff"/><text x="33" y="21" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" fill="#dff7ff" letter-spacing="1.1">TECNOLOGIA TECXHANS</text></g>
+ </g></svg>
