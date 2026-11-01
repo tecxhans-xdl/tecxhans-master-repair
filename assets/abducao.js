@@ -1,1 +1,72 @@
-(()=>{'use strict';const intro=document.getElementById('txIntro'),skip=document.getElementById('txSkip'),sound=document.getElementById('txAudio'),alien=document.getElementById('txAlienEaster'),secret=document.getElementById('txSecret'),line=document.getElementById('txIntroLine');if(!intro)return;let timers=[],audio=null,muted=true,finished=false;const later=(fn,ms)=>timers.push(setTimeout(fn,ms));const home=()=>!location.hash||location.hash==='#inicio';const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;const tone=(freq,duration=.14,type='sine')=>{if(muted)return;try{audio ||=new (window.AudioContext||window.webkitAudioContext)();const osc=audio.createOscillator(),gain=audio.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,audio.currentTime);gain.gain.setValueAtTime(.035,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);osc.connect(gain).connect(audio.destination);osc.start();osc.stop(audio.currentTime+duration)}catch(e){}};const finish=()=>{if(finished)return;finished=true;timers.forEach(clearTimeout);timers=[];intro.hidden=true;document.body.style.overflow='';alien.hidden=false;try{sessionStorage.setItem('tx-abducao-v7.1','seen')}catch(e){}};skip.addEventListener('click',finish);sound.addEventListener('click',()=>{muted=!muted;sound.textContent=muted?'🔇 Ativar som':'🔊 Som ligado';sound.setAttribute('aria-pressed',String(!muted));if(!muted)tone(640,.18)});alien.addEventListener('click',()=>{secret.hidden=!secret.hidden});document.getElementById('txSecretClose').addEventListener('click',()=>secret.hidden=true);window.addEventListener('hashchange',()=>{if(!intro.hidden)finish()});let seen=false;try{seen=sessionStorage.getItem('tx-abducao-v7.1')==='seen'}catch(e){}if(!home()||reduced||seen){alien.hidden=false;return}intro.hidden=false;document.body.style.overflow='hidden';intro.classList.add('tx-arrival');later(()=>{intro.classList.add('tx-contact');line.textContent='Mascote e robô: missão iniciada!';tone(430)},2200);later(()=>{line.textContent='ALERTA! Sinal extraterrestre detectado...';tone(280,.35,'sawtooth')},3600);later(()=>{intro.classList.add('tx-beam');line.textContent='🛸 RAIO DE ABDUÇÃO ATIVADO!';tone(190,.8,'sawtooth')},4800);later(()=>{intro.classList.add('tx-abduct');tone(550,.4)},5700);later(()=>{intro.classList.add('tx-portal-open');line.textContent='TECNOLOGIA DE OUTRO MUNDO!';tone(790,.7)},7800);later(finish,10500);document.addEventListener('visibilitychange',()=>{if(document.hidden&&!intro.hidden)finish()},{once:true});})();
+/* TecXhans 7.5 — compact cinematic video opening */
+(()=>{
+  'use strict';
+  const intro=document.getElementById('txIntro');
+  const video=document.getElementById('txIntroVideo');
+  const skip=document.getElementById('txSkip');
+  const audio=document.getElementById('txAudio');
+  const play=document.getElementById('txPlay');
+  const replay=document.getElementById('txReplay');
+  const watchHome=document.getElementById('txWatchHome');
+  const alien=document.getElementById('txAlienEaster');
+  const secret=document.getElementById('txSecret');
+  const msg=document.getElementById('txVideoMessage');
+  const secretClose=document.getElementById('txSecretClose');
+  if(!intro||!video||!skip||!audio)return;
+  const KEY='tx-cinema-7.5-seen';
+  let timeout=null;
+  const home=()=>!location.hash||location.hash==='#inicio';
+  const safeStore=()=>{try{sessionStorage.setItem(KEY,'1')}catch(e){}};
+  const wasSeen=()=>{try{return sessionStorage.getItem(KEY)==='1'}catch(e){return false}};
+  function finish(){
+    intro.hidden=true;
+    document.body.style.overflow='';
+    clearTimeout(timeout);timeout=null;
+    video.pause();
+    if(alien)alien.hidden=false;
+    if(replay)replay.hidden=false;
+    safeStore();
+  }
+  function start(){
+    if(!home())return;
+    if(alien)alien.hidden=true;
+    if(replay)replay.hidden=true;
+    intro.hidden=false;
+    if(msg)msg.hidden=true;
+    document.body.style.overflow='hidden';
+    video.currentTime=0;
+    video.muted=true;
+    audio.textContent='🔇 Ativar som';
+    audio.setAttribute('aria-pressed','false');
+    if(play)play.hidden=true;
+    const promise=video.play();
+    if(promise&&typeof promise.catch==='function')promise.catch(()=>{if(play)play.hidden=false});
+    clearTimeout(timeout);
+    timeout=setTimeout(finish,22000);
+  }
+  skip.addEventListener('click',finish);
+  audio.addEventListener('click',()=>{
+    video.muted=!video.muted;
+    audio.textContent=video.muted?'🔇 Ativar som':'🔊 Silenciar';
+    audio.setAttribute('aria-pressed',String(!video.muted));
+    if(video.paused)video.play().catch(()=>{if(play)play.hidden=false});
+  });
+  if(play)play.addEventListener('click',()=>{play.hidden=true;video.play().catch(()=>{play.hidden=false})});
+  if(replay)replay.addEventListener('click',start);
+  if(watchHome)watchHome.addEventListener('click',start);
+  if(alien&&secret)alien.addEventListener('click',()=>{secret.hidden=!secret.hidden});
+  if(secretClose&&secret)secretClose.addEventListener('click',()=>{secret.hidden=true});
+  video.addEventListener('ended',finish);
+  video.addEventListener('error',()=>{if(msg)msg.hidden=false;if(play)play.hidden=false});
+  window.addEventListener('hashchange',()=>{if(!intro.hidden&&!home())finish()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!intro.hidden)finish()});
+  document.addEventListener('visibilitychange',()=>{
+    if(intro.hidden)return;
+    if(document.hidden)video.pause();
+    else if(!video.ended&&play&&play.hidden)video.play().catch(()=>{play.hidden=false});
+  });
+  if(!home()||matchMedia('(prefers-reduced-motion: reduce)').matches||wasSeen()){
+    if(alien)alien.hidden=false;
+    if(replay)replay.hidden=false;
+  }else start();
+})();
