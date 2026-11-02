@@ -543,6 +543,33 @@ window.__txReady=true;
 })();
 
 </script>
+<!-- TecXhans: acesso alternativo ao chat no celular -->
+<style>
+#txMobileChatLaunch{display:none!important}
+@media(max-width:767px){
+ #txMobileChatLaunch{display:flex!important;position:fixed;left:12px;bottom:65px;z-index:9998;
+ align-items:center;gap:7px;max-width:calc(100vw - 110px);padding:11px 14px;
+ color:white;background:linear-gradient(125deg,#1657cc,#7d21c9);border:1px solid #9ae8ff;
+ border-radius:28px;box-shadow:0 4px 21px #0009;font:700 13px system-ui,sans-serif;
+ cursor:pointer;touch-action:manipulation;pointer-events:auto}
+}
+</style>
+<button id="txMobileChatLaunch" type="button" aria-label="Abrir atendimento TecXhans">💬 Atendimento</button>
+<script>
+(function(){
+ var b=document.getElementById('txMobileChatLaunch');if(!b)return;
+ b.addEventListener('click',function(){
+   if(window.Tawk_API && typeof window.Tawk_API.maximize==='function'){
+      window.Tawk_API.maximize();
+   } else if(window.Tawk_API && typeof window.Tawk_API.toggle==='function'){
+      window.Tawk_API.toggle();
+   } else {
+      alert('O chat ainda está carregando. Verifique sua conexão e tente novamente.');
+   }
+ });
+})();
+</script>
+
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
