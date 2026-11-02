@@ -22,7 +22,7 @@ const storeNumber='5511982901124';
 let cart=[];try{cart=JSON.parse(localStorage.getItem('tx_cart')||'[]');if(!Array.isArray(cart))cart=[]}catch{cart=[]}
 const $=s=>document.querySelector(s),money=n=>n==null?'Sob consulta':n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function show(page){if(!document.getElementById(page))page='inicio';document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===page));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===page));history.replaceState(null,'','#'+page);window.scrollTo({top:0,behavior:'smooth'})}
+function show(page){if(!document.getElementById(page))page='inicio';const prev=document.querySelector('section.page.active')?.id;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===page));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===page));history.replaceState(null,'','#'+page);window.scrollTo({top:0,behavior:'smooth'});if(prev&&prev!==page)document.dispatchEvent(new CustomEvent('tx:page-change',{detail:{page}}))}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-page],[data-go]');if(t)show(t.dataset.page||t.dataset.go)});document.querySelectorAll('[data-page]').forEach(x=>x.addEventListener('click',()=>show(x.dataset.page)));
 function card(p){const art=p.cat==='Seminovos'?`<div class="used-art used-${safe(p.id)}" role="img" aria-label="Imagem ilustrativa do ${safe(p.name)}"></div>`:'';const download=p.id==='personalize'?`<a class="btn" href="https://github.com/tecxhans-xdl/tecxhans-master-repair/releases/download/personalize-v4.6.1/PersonalizePRO_4.6.1_Protecao_Dados.exe" target="_blank" rel="noopener noreferrer" download>⬇ Baixar para Windows (4.6.1)</a>`:'';return `<article class="card">${art}<div class="emoji">${safe(p.icon)}</div><span class="tag">${safe(p.cat)}</span><h3>${safe(p.name)}</h3><p>${safe(p.desc)}</p><div class="price">${money(p.price)}</div><div class="product-actions"><button class="btn" data-add="${safe(p.id)}">🛒 Adicionar</button><a class="btn secondary" target="_blank" rel="noopener" href="https://wa.me/${storeNumber}?text=${encodeURIComponent('Olá! Quero saber mais sobre '+p.name+'.')}">Consultar</a>${download}</div></article>`}
 function renderProducts(){const categories=[['💻','Softwares','softwares'],['🔌','Acessórios','loja'],['🎮','Eletrônicos','loja'],['📱','Seminovos','seminovos']];$('#categories').innerHTML=categories.map(([icon,name,page])=>`<article class="card"><div class="emoji">${icon}</div><h3>${name}</h3><button class="btn secondary" data-go="${page}">Explorar →</button></article>`).join('');$('#usedProducts').innerHTML=products.filter(p=>p.cat==='Seminovos').map(card).join('');const cats=['Todos','Acessórios','Eletrônicos','Seminovos'];$('#filters').innerHTML=cats.map((x,i)=>`<button data-filter="${x}" class="${i===0?'active':''}">${x}</button>`).join('');filter('Todos')}
@@ -32,3 +32,77 @@ function save(){localStorage.setItem('tx_cart',JSON.stringify(cart));renderCart(
 function add(id){const p=products.find(x=>x.id===id);if(!p)return;const found=cart.find(x=>x.id===id);if(found)found.qty++;else cart.push({id,qty:1});save();$('#cartOverlay').classList.add('open')}
 function renderCart(){cart=cart.filter(x=>products.some(p=>p.id===x.id)&&Number.isInteger(x.qty)&&x.qty>0);$('#cartCount').textContent=cart.reduce((s,x)=>s+x.qty,0);$('#cartItems').innerHTML=cart.length?cart.map(x=>{const p=products.find(y=>y.id===x.id);return `<div class="row"><div><strong>${safe(p.name)}</strong><br><span class="mini">${x.qty} × ${money(p.price)}</span></div><button class="btn secondary" data-remove="${safe(x.id)}">Remover</button></div>`}).join(''):'<p>Seu carrinho está vazio.</p>';const total=cart.reduce((s,x)=>s+(products.find(y=>y.id===x.id).price||0)*x.qty,0);$('#cartTotal').textContent='Total de itens com preço definido: '+money(total);$('#checkout').disabled=!cart.length}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-add]'),r=e.target.closest('[data-remove]'),f=e.target.closest('[data-filter]');if(a)add(a.dataset.add);if(r){cart=cart.filter(x=>x.id!==r.dataset.remove);save()}if(f)filter(f.dataset.filter)});$('#openCart').onclick=()=>$('#cartOverlay').classList.add('open');$('#closeCart').onclick=()=>$('#cartOverlay').classList.remove('open');$('#cartOverlay').onclick=e=>{if(e.target.id==='cartOverlay')e.target.classList.remove('open')};$('#checkout').onclick=()=>{if(!cart.length)return;const lines=cart.map(x=>{const p=products.find(y=>y.id===x.id);return `• ${x.qty}x ${p.name} (${money(p.price)})`});const msg='Olá, TecXhans! Quero consultar este pedido:\n'+lines.join('\n')+'\nPodem confirmar disponibilidade e valor final?';window.open('https://wa.me/'+storeNumber+'?text='+encodeURIComponent(msg),'_blank','noopener')};$('#year').textContent=new Date().getFullYear();renderProducts();$('#homePartners').innerHTML=partners.map(partnerCard).join('');$('#allPartners').innerHTML=partners.map(partnerCard).join('');renderCart();show(location.hash.slice(1)||'inicio');
+
+
+/* TecXhans 7.5 — surpresa dos mascotes nas abas.
+   Não altera a animação de abertura, outros scripts, links ou imagens do site.
+   Som sintetizado localmente após toque/clique do visitante, com botão para silenciar. */
+(function mascotSurprise(){
+  'use strict';
+  const trio=[
+    {name:'ET TecXhans',image:'assets/torcida-alien.png',line:'👽 Cheguei de outro planeta!',notes:[650,970,770]},
+    {name:'Robô TecXhans',image:'assets/torcida-robo.png',line:'🤖 Bip-bip! Nova missão!',notes:[510,660,880]},
+    {name:'Mascote TecXhans',image:'assets/torcida-mascote.png',line:'😎 Bora explorar!',notes:[420,540,800]}
+  ];
+  const phrases={inicio:'Bem-vindo ao universo TecXhans!',loja:'Olha as novidades da loja!',softwares:'Tecnologia que facilita sua vida!',seminovos:'Achados de outro mundo!',assistencia:'Missão: resolver seu problema!',desbloqueios:'Nova área desbloqueada!',parceiros:'Nossos parceiros são especiais!',contato:'Bora conversar com a TecXhans!'};
+  const style=document.createElement('style');
+  style.textContent=`
+  .tx-surprise{position:fixed;right:10px;bottom:80px;z-index:38;width:min(235px,75vw);pointer-events:none;opacity:0;visibility:hidden;transform:translate(115%,28px) scale(.72);transition:opacity .22s ease,transform .46s cubic-bezier(.17,1.5,.48,1),visibility .22s;filter:drop-shadow(0 7px 16px #0009)}
+  .tx-surprise.show{opacity:1;visibility:visible;transform:translate(0,0) scale(1)}
+  .tx-surprise img{display:block;width:130px;max-width:62%;height:146px;object-fit:contain;margin:0 13px -10px auto;filter:drop-shadow(0 0 12px #34ddffae);animation:txSurpriseFloat 1.2s ease-in-out infinite alternate}
+  .tx-surprise-speech{background:linear-gradient(135deg,#13163beb,#38176deb);border:1px solid #60dfff;border-radius:17px;padding:9px 12px;text-align:center;box-shadow:0 0 18px #44d8ff78,inset 0 0 16px #8030d137;color:#fff;font:700 12px/1.3 system-ui,Segoe UI,sans-serif}
+  .tx-surprise-speech small{display:block;font-size:10px;font-weight:500;color:#b4f6ff;margin-top:2px}
+  .tx-surprise-sound{position:fixed;right:77px;bottom:19px;z-index:86;background:#101840e8;border:1px solid #438ab0;border-radius:24px;color:white;min-width:45px;min-height:40px;padding:8px 11px;box-shadow:0 0 11px #306add6b;font:700 13px system-ui,Segoe UI,sans-serif;cursor:pointer}
+  .tx-surprise-sound:hover,.tx-surprise-sound:focus-visible{border-color:#59e8ff;outline-offset:3px}
+  @keyframes txSurpriseFloat{from{transform:translateY(0) rotate(-3deg)}to{transform:translateY(-8px) rotate(3deg)}}
+  @media(max-width:520px){.tx-surprise{right:6px;bottom:76px;width:min(200px,66vw)}.tx-surprise img{height:119px;width:114px;margin-bottom:-9px}.tx-surprise-speech{font-size:11px;padding:7px 9px}.tx-surprise-sound{right:76px;bottom:18px;font-size:12px}}
+  @media(prefers-reduced-motion:reduce){.tx-surprise,.tx-surprise img{animation:none!important;transition:none!important}}
+  #txIntro:not([hidden]) ~ .tx-surprise-sound{display:none}
+  `;
+  document.head.append(style);
+  const popup=document.createElement('div');
+  popup.className='tx-surprise';popup.id='txSurprise';popup.setAttribute('aria-hidden','true');
+  const img=document.createElement('img');img.alt='';img.width=130;img.height=146;
+  const speech=document.createElement('div');speech.className='tx-surprise-speech';
+  popup.append(img,speech);document.body.append(popup);
+  const soundBtn=document.createElement('button');soundBtn.type='button';soundBtn.id='txSurpriseSound';soundBtn.className='tx-surprise-sound';
+  const storageKey='tx_mascot_sound';
+  let sound=true;try{sound=localStorage.getItem(storageKey)!=='off'}catch(_e){}
+  function refreshSoundButton(){soundBtn.textContent=sound?'🔊':'🔇';soundBtn.setAttribute('aria-label',sound?'Silenciar sons dos mascotes':'Ativar sons dos mascotes');soundBtn.setAttribute('title',sound?'Silenciar mascotes':'Ativar som dos mascotes');soundBtn.setAttribute('aria-pressed',String(sound));}
+  refreshSoundButton();document.body.append(soundBtn);
+  soundBtn.addEventListener('click',()=>{sound=!sound;try{localStorage.setItem(storageKey,sound?'on':'off')}catch(_e){}refreshSoundButton()});
+  let last=-1,hideTimer=0,audioContext;
+  function sciFiSound(notes){
+    if(!sound)return;
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    try{
+      audioContext=audioContext||new AC();
+      if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});
+      const start=audioContext.currentTime;
+      notes.forEach((hz,i)=>{
+        const osc=audioContext.createOscillator(),gain=audioContext.createGain();
+        osc.type=i===1?'sine':'triangle';osc.frequency.setValueAtTime(hz,start+i*.105);
+        gain.gain.setValueAtTime(.0001,start+i*.105);
+        gain.gain.exponentialRampToValueAtTime(.055,start+i*.105+.016);
+        gain.gain.exponentialRampToValueAtTime(.0001,start+i*.105+.16);
+        osc.connect(gain);gain.connect(audioContext.destination);
+        osc.start(start+i*.105);osc.stop(start+i*.105+.18);
+      });
+    }catch(_err){/* Sem som quando o navegador não permitir. */}
+  }
+  document.addEventListener('tx:page-change',e=>{
+    if(document.hidden||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    const intro=document.getElementById('txIntro');if(intro&&!intro.hidden)return;
+    let ix=(last+1+Math.floor(Math.random()*2))%trio.length;
+    if(ix===last)ix=(ix+1)%trio.length;
+    last=ix;
+    const who=trio[ix],page=e.detail?.page||'inicio';
+    img.src=who.image;img.alt=who.name;
+    speech.replaceChildren(document.createTextNode(who.line));
+    const small=document.createElement('small');small.textContent=phrases[page]||'Explore nosso universo!';speech.append(small);
+    popup.classList.remove('show');void popup.offsetWidth;popup.classList.add('show');
+    clearTimeout(hideTimer);hideTimer=setTimeout(()=>popup.classList.remove('show'),2200);
+    sciFiSound(who.notes);
+  });
+})();
