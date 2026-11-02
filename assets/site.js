@@ -17,7 +17,8 @@ const products=[
 {id:'notebooks',name:'Notebooks seminovos',cat:'Seminovos',icon:'💻',desc:'Consulte modelos e disponibilidade.',price:null}
 ];
 // Preencha whatsapp somente após confirmar com o parceiro. Imagem opcional: assets/parceiros/nome.jpg
-const partners=[{name:'Mimos e Personalizados Fernanda Prado',software:'Personalize PRO',icon:'🎁',whatsapp:'5511982898226',image:'assets/parceira-fernanda-prado.jpg'},{name:'Bancada Unlock',software:'Ferramentas e soluções para técnicos',icon:'👽',image:'assets/parceiro-bancada-unlock.jpg',url:'https://chat.whatsapp.com/JqCDNoyIDUXGK3dv96uqh7?s=cl&p=a&mlu=4&ilr=4'}];
+const partners=[{name:'Mimos e Personalizados Fernanda Prado',software:'Personalize PRO',icon:'🎁',whatsapp:'5511982898226',image:'assets/parceira-fernanda-prado.jpg'},{name:'Bancada Unlock',software:'Ferramentas e soluções para técnicos',icon:'👽',image:'assets/parceiro-bancada-unlock.jpg',url:'https://chat.whatsapp.com/JqCDNoyIDUXGK3dv96uqh7?s=cl&p=a&mlu=4&ilr=4'},
+{name:'Buffet M&A',software:'Almoços, jantares, churrasco e finger food para eventos',icon:'🍽️',whatsapp:'5511999762674',image:'assets/parceiro-buffet-ma.webp'}];
 const storeNumber='5511982901124';
 let cart=[];try{cart=JSON.parse(localStorage.getItem('tx_cart')||'[]');if(!Array.isArray(cart))cart=[]}catch{cart=[]}
 const $=s=>document.querySelector(s),money=n=>n==null?'Sob consulta':n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
