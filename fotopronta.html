@@ -120,6 +120,8 @@ button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:no
  .mobile-editor-actions span{max-width:145px}
 }
 
+#readyDialog .ready-export{max-width:470px}#readyDialog img[hidden]{display:none!important}#readyDialog .dialog-actions{display:flex;flex-wrap:wrap;gap:8px}#readyDialog button{min-height:42px}#exportDialog label{display:block;margin:10px 0}.tx-dialog{max-width:min(94vw,510px)}
+@media(max-width:800px){.top-actions .nav-tool{min-width:65px}#saveProject{border-color:#19d9cf!important;box-shadow:0 0 11px #19d9cf40}.status-buttons{flex-wrap:wrap}#readyDialog .dialog-actions>*{flex:1 1 44%}}
 </style>
 
 <style>
@@ -167,9 +169,9 @@ window.addEventListener('unhandledrejection',function(e){
   <button type="button" class="nav-tool" id="goHome" title="Voltar à área inicial"><b>⌂</b><span>Início</span></button>
   <button type="button" class="nav-tool" id="newProject" title="Novo projeto"><b>＋</b><span>Novo</span></button>
   <button type="button" class="nav-tool" id="openProject" title="Abrir projeto .json"><b>📂</b><span>Abrir</span></button>
-  <button type="button" class="nav-tool" id="saveProject" title="Salvar arquivo do projeto"><b>▣</b><span>Salvar</span></button>
+  <button type="button" class="nav-tool" id="saveProject" title="Salvar a foto editada como PNG (imagem de verdade)"><b>▣</b><span>Salvar foto</span></button>
   <button type="button" class="nav-tool hot" id="printTop" title="Imprimir ou salvar em PDF"><b>▤</b><span>Imprimir</span></button>
-  <button type="button" class="nav-tool" id="exportTop" title="Exportar PNG ou JPG"><b>⇩</b><span>Exportar</span></button>
+  <button type="button" class="nav-tool" id="exportTop" title="Salvar imagem A4 ou gerar PDF"><b>⇩</b><span>PNG/JPG/PDF</span></button>
   <button type="button" class="nav-tool" id="calcTop" title="Ir à calculadora"><b>▦</b><span>Calcular</span></button>
   <button type="button" class="nav-tool" id="historyTop" title="Projetos salvos neste navegador"><b>◷</b><span>Histórico</span></button>
   <button type="button" class="nav-tool" id="settingsTop" title="Configurações de impressão"><b>⚙</b><span>Opções</span></button>
@@ -250,15 +252,21 @@ window.addEventListener('unhandledrejection',function(e){
   </section>
  </aside>
 </main>
-<footer class="statusbar"><div class="status-left"><span id="projectStatus">✓ Projeto: Sem título</span><span id="templateStatus">▦ Modelo: 12 fotos A4</span><span>◻ A4 · 210 × 297 mm</span><span id="photoStatus">▧ 0 fotos</span></div><div class="status-buttons"><button class="footer-export" type="button" id="exportFooter">⇩ Exportar PNG/JPG</button><button class="footer-print" type="button" id="printFooter">▤ Imprimir / PDF</button></div><small title="Código de identidade TecXhans" class="easter">TX-2419</small></footer>
+<footer class="statusbar"><div class="status-left"><span id="projectStatus">✓ Projeto: Sem título</span><span id="templateStatus">▦ Modelo: 12 fotos A4</span><span>◻ A4 · 210 × 297 mm</span><span id="photoStatus">▧ 0 fotos</span></div><div class="status-buttons"><button class="footer-export" type="button" id="exportFooter">⇩ Salvar foto / A4</button><button class="footer-print" type="button" id="printFooter">▤ Imprimir / PDF</button></div><small title="Código de identidade TecXhans" class="easter">TX-2419</small></footer>
 <input id="photosInput" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp,image/heic,image/heif,.heic,.heif" multiple hidden>
 <input id="projectInput" type="file" accept="application/json,.json" hidden>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
-<dialog id="exportDialog" class="tx-dialog"><form method="dialog"><h2>⇩ Exportar folha A4</h2><p>Escolha o formato em alta resolução (2480 × 3508 pixels, equivalente a A4/300 ppi). Use a escala 100% na impressão.</p><label>Formato<select id="exportFormat"><option value="png">PNG — máxima fidelidade</option><option value="jpeg">JPG — arquivo menor</option><option value="pdf">PDF A4 — ideal para imprimir no celular</option></select></label><label>Página<select id="exportPage"><option value="current">Página atual</option><option value="all">Todas as páginas (arquivos separados)</option></select></label><div class="dialog-actions"><button type="button" id="doExport" class="primary-btn">Exportar imagens</button><button value="cancel">Cancelar</button></div></form></dialog>
+<dialog id="exportDialog" class="tx-dialog"><form method="dialog"><h2>📸 Salvar ou imprimir</h2><p>Escolha o que deseja salvar. <strong>PNG e JPG são arquivos de imagem.</strong> PDF é um documento para impressão. Projeto editável é salvo separadamente no Histórico.</p>
+<label>O que salvar?<select id="exportTarget"><option value="photo">Somente a foto selecionada (editada)</option><option value="sheet">Folha A4 com a montagem</option></select></label>
+<label>Formato<select id="exportFormat"><option value="png">Imagem PNG (recomendado)</option><option value="jpeg">Imagem JPG</option><option value="pdf">Documento PDF A4</option></select></label>
+<label id="exportPageRow">Páginas da folha A4<select id="exportPage"><option value="current">Página atual</option><option value="all">Todas as páginas</option></select></label>
+<p id="exportTip" class="subtle">As imagens são geradas no navegador, sem enviar suas fotos para servidores.</p>
+<div class="dialog-actions"><button type="button" id="doExport" class="primary-btn">Salvar imagem</button><button value="cancel">Cancelar</button></div></form></dialog>
+<dialog id="readyDialog" class="tx-dialog"><div class="ready-export"><h2>✅ Arquivo pronto!</h2><p id="readyDescription">Sua imagem está pronta para baixar.</p><img id="readyPreview" hidden alt="Prévia do arquivo que será salvo" style="max-width:100%;max-height:220px;object-fit:contain;border-radius:10px;background:#fff;margin:8px auto;display:block"><p class="subtle" id="readyHint">No celular, use Compartilhar ou Baixar. Se o navegador bloquear o download, abra a imagem e mantenha pressionada para salvar.</p><div class="dialog-actions"><button type="button" id="readyDownload" class="primary-btn">⬇ Baixar arquivo</button><button type="button" id="readyShare">📲 Compartilhar / salvar</button><button type="button" id="readyView">🔎 Abrir imagem</button><button type="button" id="readyClose">Fechar</button></div></div></dialog>
 <dialog id="settingsDialog" class="tx-dialog"><form method="dialog"><h2>⚙ Configurações de impressão</h2><label class="check"><input type="checkbox" id="printBorders" checked> Mostrar contorno da moldura no arquivo impresso</label><label class="check"><input type="checkbox" id="showSafeArea" checked> Mostrar área segura na prévia (não sai na impressão)</label><label class="check"><input type="checkbox" id="autoCycle" checked> Repetir fotos automaticamente para preencher posições vazias</label><label>Nome do projeto<input type="text" id="projectName" maxlength="80" value="Sem título" autocomplete="off"></label><div class="dialog-actions"><button class="primary-btn" value="ok">Aplicar</button><button value="cancel">Fechar</button></div></form></dialog>
-<dialog id="historyDialog" class="tx-dialog"><form method="dialog"><h2>◷ Projetos neste navegador</h2><p>Somente você tem acesso aos projetos salvos neste dispositivo. Para levar o projeto a outro computador, use <strong>Salvar</strong>.</p><div id="historyItems"></div><div class="dialog-actions"><button type="button" class="primary-btn" id="saveBrowser">Salvar projeto neste navegador</button><button value="cancel">Fechar</button></div></form></dialog>
+<dialog id="historyDialog" class="tx-dialog"><form method="dialog"><h2>◷ Projetos neste navegador</h2><p>O Histórico guarda projetos editáveis neste navegador. Para levar o projeto a outro computador, use <strong>Baixar projeto (.json)</strong>. Esse arquivo não é uma foto.</p><div id="historyItems"></div><div class="dialog-actions"><button type="button" class="primary-btn" id="saveBrowser">Guardar projeto neste navegador</button><button type="button" id="downloadProject">Baixar projeto (.json)</button><button value="cancel">Fechar</button></div></form></dialog>
 <script>
-/* FotoPronta PRO Neon 2.0 — TecXhans Software. Sem bibliotecas externas. */
+/* FotoPronta PRO Neon 2.0.3 — TecXhans Software. Sem bibliotecas externas. */
 (()=>{'use strict';
 const $=id=>document.getElementById(id);
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
@@ -354,10 +362,101 @@ function resetProject(){state.photos.forEach(p=>{if(p.url.startsWith('blob:'))UR
 function toggleTab(name){document.querySelectorAll('[data-tab]').forEach(x=>{const active=x.dataset.tab===name;x.classList.toggle('active',active);x.setAttribute('aria-selected',String(active))});['ajustes','efeitos','ferramentas'].forEach(id=>$(id+'Panel').hidden=id!==name)}
 function calculate(){const cost=['paperCost','inkCost','materialCost','laborCost','packingCost'].reduce((sum,id)=>sum+numericInput(id),0);$('markupCustomWrap').hidden=$('markup').value!=='custom';const percentage=$('markup').value==='custom'?numericInput('markupCustom'):numericInput('markup');$('totalCost').textContent=money(cost);$('salePrice').textContent=money(cost*(1+percentage/100))}
 function saveCanvasBlob(canvas,type='image/png',quality=.95){return new Promise((res,rej)=>canvas.toBlob(b=>b?res(b):rej(Error('Não foi possível gerar imagem')),type,quality))}
-function downloadBlob(blob,name){const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000)}
+function downloadBlob(blob,name){
+  // File downloads require a Blob URL and an actual filename; never navigate to raw base64 or JSON.
+  const url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download=name;a.rel='noopener';a.style.display='none';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),120000);
+}
+let exportReady=null;
+function presentDownload(blob,name,kind){
+ if(!blob||!blob.size)throw Error('Arquivo vazio');
+ if(!isMobile()){downloadBlob(blob,name);toast(name+' baixado.');return}
+ if(exportReady?.url)URL.revokeObjectURL(exportReady.url);
+ exportReady={blob,name,kind,url:URL.createObjectURL(blob)};
+ $('readyDescription').textContent='Arquivo: '+name+' ('+Math.round(blob.size/1024)+' KB)';
+ $('readyHint').textContent=kind==='pdf'?'Para imprimir, baixe o PDF e abra no aplicativo de arquivos do seu celular.':'Toque em Compartilhar / salvar ou Baixar arquivo. Se aparecer no navegador, mantenha o dedo sobre a imagem e escolha Salvar imagem.';
+ $('readyView').textContent=kind==='pdf'?'📄 Abrir PDF':'🔎 Abrir imagem';
+ const preview=$('readyPreview');
+ if(kind==='pdf'){preview.hidden=true;preview.removeAttribute('src')}else{preview.hidden=false;preview.src=exportReady.url}
+ const canShare=typeof navigator.share==='function'&&typeof File==='function';
+ $('readyShare').hidden=!canShare;
+ $('readyDialog').showModal();
+}
+async function shareReady(){
+ if(!exportReady)return;
+ const {blob,name}=exportReady;
+ try{
+  const file=new File([blob],name,{type:blob.type});
+  if(typeof navigator.canShare==='function'&&!navigator.canShare({files:[file]}))throw Error('Compartilhamento de arquivo não suportado');
+  await navigator.share({files:[file],title:'FotoPronta PRO Neon — '+name});
+  toast('Arquivo enviado para o compartilhamento do celular.');
+ }catch(err){if(err.name!=='AbortError'){toast('Não foi possível compartilhar. Use Baixar arquivo.');console.warn(err)}}
+}
+function bindReadyDialog(){
+ $('readyDownload').onclick=()=>{if(!exportReady)return;downloadBlob(exportReady.blob,exportReady.name);toast('Download solicitado. Confira a pasta Downloads do celular.');};
+ $('readyShare').onclick=shareReady;
+ $('readyView').onclick=()=>{if(!exportReady)return;const a=document.createElement('a');a.href=exportReady.url;a.target='_blank';a.rel='noopener noreferrer';document.body.appendChild(a);a.click();a.remove()};
+ $('readyClose').onclick=()=>$('readyDialog').close();
+}
 function slug(){return (state.projectName||'projeto').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'-').replace(/^-|-$/g,'').slice(0,50)||'fotopronta'}
 function renderHighRes(page){const canvas=document.createElement('canvas');canvas.width=2480;canvas.height=3508;renderSheet(canvas,page,false);return canvas}
-async function exportImages(){if(!state.photos.length)return toast('Carregue fotos antes de exportar.');const format=$('exportFormat').value,all=$('exportPage').value==='all',pages=all?Array.from({length:totals().pages},(_,i)=>i):[state.currentPage];if(format==='pdf'){$('exportDialog').close();await exportPdf(pages);return}if(pages.length>15){toast('Para mais de 15 páginas, use Imprimir → Salvar em PDF.');return} $('exportDialog').close();$('saveState').textContent='Preparando exportação…';const type=format==='png'?'image/png':'image/jpeg';try{for(const page of pages){const canvas=renderHighRes(page);const blob=await saveCanvasBlob(canvas,type,.95);downloadBlob(blob,`FotoPronta_${slug()}_pagina_${page+1}.${format==='png'?'png':'jpg'}`);await new Promise(r=>setTimeout(r,180))}toast(pages.length+' página(s) exportada(s) em '+format.toUpperCase());$('saveState').textContent=state.dirty?'Alterações não salvas':'Projeto salvo'}catch(err){console.error(err);toast('Falha na exportação: '+err.message)}}
+function renderEditedPhoto(){
+ const p=selected(),t=tpl();if(!p)throw Error('Selecione uma foto primeiro.');
+ const max=2400,ratio=t.w/t.h;
+ const canvas=document.createElement('canvas');
+ canvas.width=Math.round(ratio>=1?max:max*ratio);
+ canvas.height=Math.round(ratio>=1?max/ratio:max);
+ const c=canvas.getContext('2d');c.fillStyle='#fff';c.fillRect(0,0,canvas.width,canvas.height);
+ const oldBorder=state.settings.printBorders;state.settings.printBorders=false;
+ try{drawPhoto(c,p,0,0,canvas.width,canvas.height,t.shape,false,t)}finally{state.settings.printBorders=oldBorder}
+ return canvas;
+}
+function updateExportOptions(){
+ const format=$('exportFormat').value,target=$('exportTarget').value;
+ if(format==='pdf'&&target==='photo')$('exportTarget').value='sheet';
+ $('exportTarget').querySelector('option[value="photo"]').disabled=format==='pdf';
+ $('exportPageRow').hidden=$('exportTarget').value==='photo';
+ $('doExport').textContent=format==='pdf'?'📄 Salvar PDF A4':'📸 Salvar imagem '+(format==='png'?'PNG':'JPG');
+ $('exportTip').textContent=format==='pdf'?'O PDF contém a montagem A4, para imprimir em tamanho real.':'A foto selecionada é salva separadamente; a folha A4 contém toda a montagem. Selecione a opção acima.';
+}
+function openExportDialog(target='sheet'){$('exportTarget').value=target;$('exportFormat').value='png';$('exportPage').value='current';updateExportOptions();$('exportDialog').showModal()}
+async function saveSelectedPhoto(){
+ if(!selected())return toast('Carregue uma foto antes de salvar.');
+ $('saveState').textContent='Preparando imagem PNG…';
+ try{const canvas=renderEditedPhoto();const blob=await saveCanvasBlob(canvas,'image/png');canvas.width=1;canvas.height=1;
+ presentDownload(blob,`FotoPronta_${slug()}_foto_${state.selected+1}.png`,'image');
+ $('saveState').textContent='Imagem pronta (PNG)';
+ }catch(err){console.error(err);toast('Não foi possível salvar a foto: '+err.message);$('saveState').textContent='Falha ao salvar imagem'}
+}
+
+async function exportImages(){
+ if(!state.photos.length)return toast('Carregue fotos antes de exportar.');
+ const format=$('exportFormat').value, target=$('exportTarget').value;
+ const all=$('exportPage').value==='all'&&target==='sheet';
+ const pages=all?Array.from({length:totals().pages},(_,i)=>i):[state.currentPage];
+ if(format==='pdf'){$('exportDialog').close();await exportPdf(pages);return}
+ if(pages.length>15)return toast('Para mais de 15 páginas, gere um PDF em partes.');
+ $('exportDialog').close();$('saveState').textContent='Preparando imagem…';
+ const mime=format==='png'?'image/png':'image/jpeg',ext=format==='png'?'png':'jpg';
+ try{
+  if(target==='photo'){
+   const canvas=renderEditedPhoto();const blob=await saveCanvasBlob(canvas,mime,.94);
+   canvas.width=1;canvas.height=1;
+   presentDownload(blob,`FotoPronta_${slug()}_foto_${state.selected+1}.${ext}`,'image');
+  }else{
+   for(const page of pages){
+    const canvas=renderHighRes(page),blob=await saveCanvasBlob(canvas,mime,.94);
+    canvas.width=1;canvas.height=1;
+    presentDownload(blob,`FotoPronta_${slug()}_A4_pagina_${page+1}.${ext}`,'image');
+    if(isMobile()&&pages.length>1){toast(`Página ${page+1} de ${pages.length} pronta. No celular, exporte uma página por vez ou use PDF para todas.`);break}
+    await new Promise(r=>setTimeout(r,120));
+   }
+  }
+  $('saveState').textContent='Imagem '+ext.toUpperCase()+' pronta';
+ }catch(err){console.error(err);toast('Falha ao criar imagem: '+err.message);$('saveState').textContent='Erro ao salvar imagem'}
+}
 // Impressão no celular: gerar um PDF A4 real, sem exigir janela pop-up.
 async function exportPdf(pageIds){
 if(!state.photos.length)return toast('Carregue fotos antes de gerar o PDF.');
@@ -383,7 +482,7 @@ for(let i=0;i<pageIds.length;i++){
 const xrefStart=len;add(`xref\n0 ${3+3*pageIds.length}\n0000000000 65535 f \n`);
 for(let id=1;id<3+3*pageIds.length;id++)add(String(offsets[id]).padStart(10,'0')+' 00000 n \n');
 add(`trailer\n<< /Size ${3+3*pageIds.length} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`);
-downloadBlob(new Blob(parts,{type:'application/pdf'}),`FotoPronta_${slug()}_A4.pdf`);
+presentDownload(new Blob(parts,{type:'application/pdf'}),`FotoPronta_${slug()}_A4.pdf`,'pdf');
 $('saveState').textContent=state.dirty?'Alterações não salvas':'Projeto salvo';toast('PDF A4 gerado. Abra o arquivo para imprimir pelo celular.');
 }catch(err){console.error(err);toast('Não foi possível gerar PDF: '+err.message);$('saveState').textContent='Falha na exportação'}
 }
@@ -400,7 +499,7 @@ async function dbPut(obj){const db=await openDb();return new Promise((resolve,re
 async function dbDelete(id){const db=await openDb();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete(id);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
 async function showHistory(){const list=$('historyItems');list.textContent='Consultando projetos…';$('historyDialog').showModal();try{const items=await dbItems();list.replaceChildren();if(!items.length){list.textContent='Nenhum projeto salvo neste navegador. Clique em “Salvar projeto neste navegador”.';return}for(const item of items){const line=document.createElement('div');line.className='history-item';const info=document.createElement('div'),name=document.createElement('strong'),date=document.createElement('small');name.textContent=item.projectName||'Sem título';date.textContent=new Date(item.savedAt).toLocaleString('pt-BR')+' · '+(item.photos?.length||0)+' fotos';info.append(name,date);const actions=document.createElement('div');actions.className='history-actions';const open=document.createElement('button');open.type='button';open.textContent='Abrir';open.onclick=async()=>{try{await restoreJson(item);$('historyDialog').close()}catch(err){toast('Erro ao abrir projeto: '+err.message)}};const del=document.createElement('button');del.type='button';del.className='delete';del.textContent='Excluir';del.onclick=async()=>{if(confirm('Excluir este projeto deste navegador?')){await dbDelete(item.id);showHistoryList()}};actions.append(open,del);line.append(info,actions);list.append(line)}}catch(err){list.textContent='Não foi possível acessar o histórico: '+err.message}}
 async function showHistoryList(){try{const items=await dbItems();$('historyItems').replaceChildren();for(const item of items){const row=document.createElement('div');row.className='history-item';const label=document.createElement('span');label.textContent=(item.projectName||'Projeto')+' · '+new Date(item.savedAt).toLocaleDateString('pt-BR');const open=document.createElement('button');open.type='button';open.textContent='Abrir';open.onclick=async()=>{await restoreJson(item);$('historyDialog').close()};const del=document.createElement('button');del.type='button';del.className='delete';del.textContent='Excluir';del.onclick=async()=>{if(confirm('Excluir este projeto?')){await dbDelete(item.id);await showHistoryList()}};row.append(label,open,del);$('historyItems').append(row)}if(!items.length)$('historyItems').textContent='Nenhum projeto salvo.'}catch(err){toast('Erro no histórico: '+err.message)}}
-async function saveInBrowser(){if(!state.photos.length)return toast('Carregue fotos antes de salvar.');$('saveState').textContent='Salvando no navegador…';try{const obj=await serialize();obj.id=Date.now().toString(36)+'-'+Math.floor(Math.random()*1e5).toString(36);await dbPut(obj);showSaved('Salvo neste navegador');toast('Projeto salvo neste navegador.');await showHistoryList()}catch(err){toast('Falha ao salvar no navegador: '+err.message+'. Use o botão Salvar para baixar JSON.')}}
+async function saveInBrowser(){if(!state.photos.length)return toast('Carregue fotos antes de salvar.');$('saveState').textContent='Salvando no navegador…';try{const obj=await serialize();obj.id=Date.now().toString(36)+'-'+Math.floor(Math.random()*1e5).toString(36);await dbPut(obj);showSaved('Salvo neste navegador');toast('Projeto salvo neste navegador.');await showHistoryList()}catch(err){toast('Falha ao salvar no navegador: '+err.message+'. Use Histórico → Baixar projeto (.json).')}}
 function switchMobileView(name,{scroll=true}={}){
 if(!['editor','paper','models','adjust','calc'].includes(name))return;
 document.body.dataset.mobileView=name;
@@ -427,7 +526,13 @@ $('prevPage').onclick=()=>{state.currentPage=clamp(state.currentPage-1,0,totals(
 $('newProject').onclick=()=>{if((state.photos.length||state.dirty)&&!confirm('Criar um projeto novo? Alterações não salvas serão perdidas.'))return;resetProject();toast('Novo projeto criado.')};
 $('goHome').onclick=()=>{window.location.href='index.html'};
 $('openProject').onclick=()=>$('projectInput').click();$('projectInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;if(f.size>65e6)return toast('Projeto muito grande para importar (máximo 65 MB).');try{const obj=JSON.parse(await f.text());if(state.photos.length&&!confirm('Abrir outro projeto? O projeto atual será substituído.'))return;await restoreJson(obj)}catch(err){toast('Não foi possível abrir o arquivo: '+err.message)}finally{e.target.value=''}};
-$('saveProject').onclick=saveJson;for(const id of ['printTop','printFooter'])$(id).onclick=printDocument;for(const id of ['exportTop','exportFooter'])$(id).onclick=()=>$('exportDialog').showModal();$('doExport').onclick=exportImages;
+$('saveProject').onclick=saveSelectedPhoto;
+for(const id of ['printTop','printFooter'])$(id).onclick=printDocument;
+for(const id of ['exportTop','exportFooter'])$(id).onclick=()=>openExportDialog('sheet');
+$('exportFormat').onchange=updateExportOptions;$('exportTarget').onchange=updateExportOptions;
+$('doExport').onclick=exportImages;
+$('downloadProject').onclick=saveJson;
+bindReadyDialog();
 $('calcTop').onclick=()=>{$('calculator').scrollIntoView({behavior:'smooth',block:'center'});$('paperCost').focus({preventScroll:true})};$('historyTop').onclick=showHistory;$('saveBrowser').onclick=saveInBrowser;
 $('settingsTop').onclick=()=>{$('projectName').value=state.projectName;$('printBorders').checked=state.settings.printBorders;$('showSafeArea').checked=state.settings.showSafeArea;$('autoCycle').checked=state.settings.autoCycle;$('settingsDialog').showModal()};
 $('settingsDialog').addEventListener('close',()=>{if($('settingsDialog').returnValue!=='ok')return;state.projectName=($('projectName').value||'Sem título').trim().slice(0,80);state.settings.printBorders=$('printBorders').checked;state.settings.showSafeArea=$('showSafeArea').checked;state.settings.autoCycle=$('autoCycle').checked;queueRender();dirty()});
