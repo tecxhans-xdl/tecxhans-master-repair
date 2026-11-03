@@ -9,6 +9,7 @@ const products=[
 {id:'juridico',name:'TecXhans Jurídico PRO',cat:'Softwares',icon:'⚖️',desc:'Gestão para escritórios de advocacia. Consulte disponibilidade.',price:null},
 {id:'kaidi-kd556s',name:'Carregador KAIDI KD-556S + cabo V8',cat:'Acessórios',icon:'🔌',image:'assets/carregador-kaidi-kd556s.png',desc:'Carregador 2 portas USB, 2,4 A, potência anunciada de 12 W, com cabo Micro-USB (V8). Consulte disponibilidade.',price:30},
 {id:'cabo',name:'Cabos e carregadores',cat:'Acessórios',icon:'🔌',desc:'Consulte modelos e disponibilidade.',price:null},
+{id:'fone-m10-tws',name:'Fone M10 Bluetooth TWS com estojo power bank',cat:'Acessórios',icon:'🎧',image:'assets/fone-m10-tecxhans.png',desc:'Fones sem fio Bluetooth TWS, estojo com indicador de carga e função power bank anunciada. Consulte disponibilidade e condições.',price:45},
 {id:'fone',name:'Fones e acessórios',cat:'Acessórios',icon:'🎧',desc:'Opções para seu dia a dia.',price:null},
 {id:'eletronicos',name:'Eletrônicos variados',cat:'Eletrônicos',icon:'🎮',desc:'Gadgets e eletrônicos: consulte nosso catálogo.',price:null},
 {id:'moto-g73',name:'Moto G73 branco',cat:'Seminovos',icon:'🤖',desc:'Recondicionado. Confirme disponibilidade e estado atual.',price:600},
