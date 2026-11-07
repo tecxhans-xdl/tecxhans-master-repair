@@ -1,6 +1,14 @@
 'use strict';
 // EDITE AQUI OS PRODUTOS. price: null significa "sob consulta".
 const products=[
+{id:'fone-1hora',name:'Fone Bluetooth 1HORA',cat:'Acessórios',icon:'🎧',image:'assets/fone-1hora.png',desc:'Confira o modelo na imagem. Consulte disponibilidade antes da compra.',price:100},
+{id:'fone-eletro',name:'Fone Bluetooth ELETRO EL-1642',cat:'Acessórios',icon:'🎧',image:'assets/fone-eletro.png',desc:'Confira o modelo na imagem. Consulte disponibilidade antes da compra.',price:100},
+{id:'fone-airdots',name:'Fone Bluetooth AirDots S',cat:'Acessórios',icon:'🎧',image:'assets/fone-airdots.png',desc:'Confira o modelo na imagem. Consulte disponibilidade antes da compra.',price:40},
+{id:'fone-earx',name:'Fone Lightning EarX',cat:'Acessórios',icon:'🎧',image:'assets/fone-earx.png',desc:'Confira o modelo na imagem. Consulte disponibilidade antes da compra.',price:25},
+{id:'fone-lehmox',name:'Fone Type-C LEHMOX LEF-1077',cat:'Acessórios',icon:'🎧',image:'assets/fone-lehmox.png',desc:'Confira o modelo na imagem. Consulte disponibilidade antes da compra.',price:25},
+{id:'adaptador-lightning',name:'Adaptador Lightning para P2 IT-BLUE',cat:'Acessórios',icon:'🎧',image:'assets/adaptador-lightning.png',desc:'Confira o modelo na imagem. Consulte disponibilidade antes da compra.',price:30},
+{id:'fone-agold',name:'Fone P2 α’GOLD',cat:'Acessórios',icon:'🎧',image:'assets/fone-agold.png',desc:'Confira o modelo na imagem. Consulte disponibilidade antes da compra.',price:20},
+{id:'fone-starmega',name:'Fone P2 Starmega ST-2001',cat:'Acessórios',icon:'🎧',image:'assets/fone-starmega.png',desc:'Confira o modelo na imagem. Consulte disponibilidade antes da compra.',price:10},
 {id:'personalize',name:'Personalize PRO',cat:'Softwares',icon:'🎨',desc:'Gestão de personalizados, clientes, estoque e orçamentos.',price:null},
 {id:'adega',name:'Adega PDV PRO',cat:'Softwares',icon:'🍹',desc:'Gestão de vendas, caixa e estoque.',price:null},
 {id:'assistpro',name:'Assistência PRO',cat:'Softwares',icon:'🛠️',desc:'Ordens de serviço e controle de assistência técnica.',price:null},
