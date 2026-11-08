@@ -18,6 +18,12 @@ const products=[
 {id:'capinha-iphone-15-diamaz',name:'Capinha DIAMAZ Space VM — iPhone 15 (laranja)',cat:'Acessórios',icon:'📱',image:'assets/capinha-iphone-15-diamaz.png',desc:'Capinha laranja com anel magnético. Compatibilidade indicada na embalagem: iPhone 15. Consulte disponibilidade.',price:50},
 {id:'capinha-iphone-14-wzx',name:'Capinha WZX — iPhone 14 (transparente/rosa)',cat:'Acessórios',icon:'📱',image:'assets/capinha-iphone-14-wzx.png',desc:'Capinha transparente com acabamento rosa e anel magnético. Compatibilidade indicada na embalagem: iPhone 14. Consulte disponibilidade.',price:50},
 {id:'capinha-iphone-13-pro-max-diamaz',name:'Capinha DIAMAZ Space VM — iPhone 13 Pro Max (escura)',cat:'Acessórios',icon:'📱',image:'assets/capinha-iphone-13-pro-max-diamaz.png',desc:'Capinha escura com anel magnético. Compatibilidade indicada na embalagem: iPhone 13 Pro Max. Consulte disponibilidade.',price:50},
+{id:'powerbank-qd5w',name:'Power Bank QD-5W 50.000 mAh',cat:'Acessórios',icon:'🔋',image:'assets/powerbank-qd5w-50000.webp',desc:'Power bank QD-5W, capacidade anunciada de 50.000 mAh, 22,5 W, display e cabos integrados. Consulte disponibilidade.',price:220},
+{id:'lehmox-33w-ios',name:'Carregador LEHMOX 33W + cabo iOS',cat:'Acessórios',icon:'🔌',image:'assets/lehmox-33w-ios.webp',desc:'Kit carregador LEHMOX 33W com cabo Lightning (iOS), conforme embalagem. Consulte compatibilidade e disponibilidade.',price:50},
+{id:'lehmox-40w-usbc',name:'Carregador LEHMOX 40W USB-C',cat:'Acessórios',icon:'🔌',image:'assets/lehmox-40w-usbc.webp',desc:'Carregador LEHMOX 40W USB-C com cabo USB-C para USB-C. Potência anunciada na embalagem.',price:90},
+{id:'adapter-120w',name:'Adapter 120W USB Tipo-C',cat:'Acessórios',icon:'🔌',image:'assets/adapter-120w.webp',desc:'Adapter com cabo Tipo-C; 120 W anunciados na embalagem. Confirme compatibilidade.',price:90},
+{id:'mi-67w-pd',name:'Mi 67W PD USB-C + USB-A',cat:'Acessórios',icon:'🔌',image:'assets/mi-67w-pd.webp',desc:'Adapter Mi 67W PD com conexões USB-C e USB-A, conforme embalagem. Confirme compatibilidade.',price:60},
+{id:'motorola-turbo125',name:'Motorola Turbo 125 Duo USB-C',cat:'Acessórios',icon:'🔌',image:'assets/motorola-turbo125.webp',desc:'Carregador Motorola Turbo 125 Duo com cabo USB-C para USB-C, conforme embalagem. Confirme compatibilidade.',price:95},
 {id:'kaidi-kd556s',name:'Carregador KAIDI KD-556S + cabo V8',cat:'Acessórios',icon:'🔌',image:'assets/carregador-kaidi-kd556s.png',desc:'Carregador 2 portas USB, 2,4 A, potência anunciada de 12 W, com cabo Micro-USB (V8). Consulte disponibilidade.',price:30},
 {id:'cabo',name:'Cabos e carregadores',cat:'Acessórios',icon:'🔌',desc:'Consulte modelos e disponibilidade.',price:null},
 {id:'fone-m10-tws',name:'Fone M10 Bluetooth TWS com estojo power bank',cat:'Acessórios',icon:'🎧',image:'assets/fone-m10-tecxhans.png',desc:'Fones sem fio Bluetooth TWS, estojo com indicador de carga e função power bank anunciada. Consulte disponibilidade e condições.',price:45},
@@ -37,7 +43,8 @@ const storeNumber='5511982901124';
 const lojaCategorias=[
 {id:'fones',name:'Fones de ouvido',icon:'🎧',description:'Bluetooth, TWS, P2, USB-C e Lightning',ids:['fone-1hora','fone-eletro','fone-airdots','fone-earx','fone-lehmox','fone-agold','fone-starmega','fone-m10-tws']},
 {id:'capinhas',name:'Capinhas',icon:'📱',description:'Proteção e estilo para seu celular',ids:['capinha-iphone-15-diamaz','capinha-iphone-14-wzx','capinha-iphone-13-pro-max-diamaz']},
-{id:'carregadores',name:'Cabos e carregadores',icon:'🔌',description:'Carregadores e cabos disponíveis',ids:['kaidi-kd556s']},
+{id:'carregadores',name:'Cabos e carregadores',icon:'🔌',description:'Carregadores de 33W a 125W e cabos disponíveis',ids:['lehmox-33w-ios','lehmox-40w-usbc','adapter-120w','mi-67w-pd','motorola-turbo125','kaidi-kd556s']},
+{id:'powerbanks',name:'Power Banks',icon:'🔋',description:'Baterias externas e acessórios para recarga',ids:['powerbank-qd5w']},
 {id:'adaptadores',name:'Adaptadores',icon:'🔗',description:'Conectores e adaptadores',ids:['adaptador-lightning']}
 ];
 let cart=[];try{cart=JSON.parse(localStorage.getItem('tx_cart')||'[]');if(!Array.isArray(cart))cart=[]}catch{cart=[]}
