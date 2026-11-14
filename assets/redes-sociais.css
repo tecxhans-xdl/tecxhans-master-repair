@@ -1,0 +1,16 @@
+/* TecXhans Software — conexões intergalácticas */
+.tx-social-links{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;align-items:center}
+.tx-social-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:9px 13px;border:1px solid var(--social);border-radius:12px;color:var(--social);background:#0b1025;font-size:13px;font-weight:750;box-shadow:0 0 12px color-mix(in srgb,var(--social) 20%,transparent);transition:transform .2s,box-shadow .2s,background .2s;text-decoration:none}
+.tx-social-link svg{width:21px;height:21px;flex:none}
+.tx-social-link:hover,.tx-social-link:focus-visible{transform:translateY(-3px);box-shadow:0 0 22px color-mix(in srgb,var(--social) 55%,transparent);background:#202747;outline:2px solid var(--social);outline-offset:2px}
+.tx-social-compact{max-width:1200px;margin:auto;padding:0 20px 8px;justify-content:flex-end;gap:8px}
+.tx-social-compact .tx-social-link{min-width:38px;min-height:34px;padding:6px 9px;border-radius:9px}
+.tx-social-compact .tx-social-link span{display:none}
+.tx-social-compact .tx-social-link svg{width:19px;height:19px}
+.tx-social-panel{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:0 0 25px;padding:22px;border:1px solid #6850b8;border-radius:22px;background:radial-gradient(ellipse at 10% 50%,#41216a,transparent 65%),linear-gradient(130deg,#111a36,#17102b);box-shadow:0 0 26px #7c46ec33}
+.tx-social-mascots{display:flex;justify-content:center;flex:0 1 250px;margin:auto;align-items:center}
+.tx-social-mascots img{width:33.33%;height:auto;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 0 8px #6a8fff88)}
+.tx-social-content{flex:1 1 450px;min-width:0}.tx-social-content h2{margin:6px 0}.tx-social-content p{margin:8px 0 15px}.tx-social-content .tx-social-links{justify-content:flex-start}
+.tx-social-footer{margin:0 auto 18px;max-width:1100px;display:grid;gap:12px;justify-items:center;padding:0 12px}.tx-social-footer strong{color:#dce7ff}
+@media(max-width:600px){.tx-social-compact{justify-content:center;padding:0 8px 7px}.tx-social-compact .tx-social-link{min-width:40px;min-height:40px}.tx-social-panel{padding:15px;gap:8px;text-align:center}.tx-social-content .tx-social-links{justify-content:center}.tx-social-mascots{flex-basis:190px}.tx-social-link{padding:8px 10px}}
+@media(prefers-reduced-motion:reduce){.tx-social-link{transition:none}.tx-social-link:hover,.tx-social-link:focus-visible{transform:none}}
