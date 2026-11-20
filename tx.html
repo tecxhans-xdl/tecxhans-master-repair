@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TX Messenger • Atualização | TecXhans Software</title>
+<meta name="description" content="Atualizações oficiais do TX Messenger pela TecXhans Software">
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100vh;font:16px system-ui,Segoe UI,Arial,sans-serif;color:#f7f7ff;background:radial-gradient(ellipse at 20% 10%,#311165 0,transparent 42%),radial-gradient(ellipse at 90% 65%,#063d71,transparent 52%),#090a1b;display:grid;place-items:center;padding:25px}
+main{width:min(560px,100%);padding:28px;border:1px solid #6841a8;border-radius:22px;background:#101426ec;box-shadow:0 0 45px #2b1380aa}.logo{font-size:50px;text-align:center}h1{text-align:center;color:#6ee5ff;margin:6px 0}h2{text-align:center;margin:3px 0 18px;font-weight:500}p{line-height:1.5;color:#d0d4ec}.tag{color:#a3abce;text-align:center}.version{padding:14px 18px;background:#1a2142;border-radius:12px;margin:18px 0}.btn{display:block;text-align:center;padding:15px;border-radius:12px;text-decoration:none;color:#fff;font-weight:700;background:linear-gradient(90deg,#753bfa,#097bd9);margin:14px 0}.btn-secondary{background:#262b46}.note{font-size:14px}a{color:#83e9ff}footer{text-align:center;color:#adb7db;font-size:13px;margin-top:22px}
+</style></head><body><main>
+<div class="logo">👨‍🔧 🤖 👽</div><h1>TX MESSENGER</h1><h2>GALACTIC CONNECT</h2><div class="tag">Atualizações oficiais • TecXhans Software</div>
+<div class="version" id="version" role="status">Consultando versão publicada...</div>
+<p>As atualizações são instaladas pelo Android. Para preservar sua conta e suas chaves locais, <strong>não desinstale o TX antigo</strong>; instale a versão nova por cima, com a mesma assinatura.</p>
+<a class="btn" id="download" href="https://github.com/tecxhans-xdl/tecxhans-master-repair/releases">Ver lançamentos oficiais</a>
+<p class="note" id="info">O botão de download direto será ativado após a publicação de um APK verificado.</p>
+<a class="btn btn-secondary" href="./#softwares">Voltar ao site TecXhans</a>
+<footer>TecXhans Software · Atendendo até Intergalaxy 🚀</footer>
+</main><script>
+(async()=>{
+ try{
+  const r=await fetch('./tx-version.json',{cache:'no-store'});if(!r.ok)throw Error('offline');const m=await r.json();
+  if(!Number.isSafeInteger(m.versionCode)||m.versionCode<1||!/^[0-9A-Za-z. -]{1,32}$/.test(m.versionName))throw Error('invalid');
+  document.getElementById('version').textContent='Versão anunciada: TX '+m.versionName;
+  if(typeof m.downloadUrl==='string'&&m.downloadUrl.length){
+   const u=new URL(m.downloadUrl);if(u.protocol==='https:'&&u.hostname==='github.com'&&u.pathname.startsWith('/tecxhans-xdl/tecxhans-master-repair/releases/download/')&&u.pathname.toLowerCase().endsWith('.apk')){
+    const a=document.getElementById('download');a.href=u.href;a.textContent='📥 Baixar TX '+m.versionName+' (APK)';document.getElementById('info').textContent='Baixe apenas versões publicadas oficialmente. Confira a assinatura ao atualizar.';
+   }
+  }
+ }catch(e){document.getElementById('version').textContent='Versão não disponível no momento';}
+})();
+</script></body></html>
